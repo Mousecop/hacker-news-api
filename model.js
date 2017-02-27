@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 const hackerNewsSchema = mongoose.Schema({
     title: {type:String, required: true},

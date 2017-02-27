@@ -54,6 +54,42 @@ app.get('/stories', (req, res) => {
 });
 
 
+
+app.put('/stories/:id', (req, res) => {
+  HackerNews
+    .findByIdAndUpdate(req.params.id,  { $inc: { votes: 1 } })
+    .exec()
+    .then(updatedPost => res.status(204).end()) 
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let server;
 function runServer() {
   return new Promise((resolve, reject) => {
