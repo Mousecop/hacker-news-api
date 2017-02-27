@@ -40,7 +40,8 @@ app.post('/stories', (req, res) => {
 
 app.get('/stories', (req, res) => {
     HackerNews
-        .find({}, {votes: 1})
+        .find()
+        .sort({votes: -1})
         .limit(20)
         .exec()
         .then(results => {
