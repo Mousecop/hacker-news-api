@@ -40,10 +40,11 @@ app.post('/stories', (req, res) => {
 
 app.get('/stories', (req, res) => {
     HackerNews
-        .find()
+        .find({}, {votes: 1})
+        .limit(20)
         .exec()
         .then(results => {
-            res.json(results.map(item => item.apiRepr()));
+            res.status(200).json(results.map(item => item.apiRepr()));
         })
         .catch(err => {
             console.log(err);
