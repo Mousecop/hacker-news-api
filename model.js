@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const hackerNewsSchema = mongoose.Schema({
-    title: String,
-    url: String,
+    title: {type:String, required: true},
+    url: {type: String, required: true},
     votes: {type: Number, default: 0}
 });
 
