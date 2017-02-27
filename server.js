@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const {HackerNews} = require('./model');
 
 mongoose.Promise = global.Promise;
 
@@ -13,6 +14,31 @@ const app = express();
 app.use(bodyParser.json());
 
 // API endpoints go here
+app.post('/stories', (req, res) => {
+    const requiredFields = ['title', 'url'];
+    for (let i=0; i<requiredFields.length; i++) {
+        const field = requiredFields[i];
+        if (!(field in req.body)) {
+            const message = `Missing \`${field}\` in request body`
+            console.error(message);
+            return res.status(400).send(message);
+        }
+    }
+    HackerNews
+        .create({
+            title: req.body.title,
+            url: req.body.url,
+        })
+        .then(results => {
+            res.status(201).json(results.apiRepr());
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({"error": "something went wrong"});
+        });
+});
+
+
 
 let server;
 function runServer() {
