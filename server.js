@@ -38,6 +38,18 @@ app.post('/stories', (req, res) => {
         });
 });
 
+app.get('/stories', (req, res) => {
+    HackerNews
+        .find()
+        .exec()
+        .then(results => {
+            res.json(results.map(item => item.apiRepr()));
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: "Something horrible went wrong" + err});
+        });
+});
 
 
 let server;
